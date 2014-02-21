@@ -1,0 +1,15 @@
+{
+  "name": "urltree",
+  "author": "Artem Nezvigin <artem@artnez.com>",
+  "description": "Named URLs data structure and builder.",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/artnez/urltree"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1"
+  },
+  "keywords": ["express", "named", "route", "tree", "url"]
+}
