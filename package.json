@@ -1,8 +1,8 @@
 {
   "name": "urltree",
   "author": "Artem Nezvigin <artem@artnez.com>",
-  "description": "Named URLs data structure and builder.",
-  "version": "0.1.0",
+  "description": "Named URL data structure with support for URL building.",
+  "version": "0.1.2",
   "main": "index.js",
   "repository": {
     "type": "git",

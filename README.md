@@ -1,7 +1,7 @@
 urltree
 =======
 
-Named URL data structure with support for URL building
+Named URL data structure with support for URL building.
 
 Install
 -------
