@@ -1,6 +1,6 @@
 var assert = require('assert');
 
-var urltree = require('.');
+var urltree = require('./');
 
 describe('root node', function() {
   var root = urltree({});
