@@ -49,6 +49,7 @@ describe('simple node', function() {
 describe('nested tree', function() {
   var root = urltree({
     'human': '/are/you/classified/as/human',
+    'korben': 'korben',
     'korben.popsicle': 'negative/i/am/a/meat/popsicle',
     'korben.asks.for.priest': 'im/uh/looking/for/a/priest',
     'leelo.supreme': 'me/fifth/element/supreme/being/me/protect/you',
@@ -56,6 +57,7 @@ describe('nested tree', function() {
   });
   it('has the right paths', function() {
     assert.equal(root.human.$path, 'human');
+    assert.equal(root.korben.$path, 'korben');
     assert.equal(root.korben.popsicle.$path, 'korben.popsicle');
     assert.equal(root.korben.asks.for.$path, 'korben.asks.for');
     assert.equal(root.leelo.supreme.$path, 'leelo.supreme');
@@ -84,12 +86,14 @@ describe('node params', function() {
   var root = urltree({
     'home': '/',
     'user': '/user/:id',
+    'file': '/file/list',
     'file.download': '/file/:id/download',
     'too.many.params': '/this/:has/to/:many-:params/:man'
   });
   it('can build urls', function() {
     assert.equal(root.home.build(), '/');
     assert.equal(root.user.build({id: '123'}), '/user/123');
+    assert.equal(root.file.build(), '/file/list');
     assert.equal(root.file.download.build({id: '123'}), '/file/123/download');
     assert.equal(root.too.many.params.build(
       {has: 'HAS', man: 'MAN', many: 'MANY', params: 'PARAMS'}),
