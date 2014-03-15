@@ -10,25 +10,46 @@ Install
 $ npm install urltree
 ```
 
-Example
--------
+Defining URLs
+-------------
 
 ```javascript
 var urltree = require('urltree');
 
 var urls = urltree({
   'user': '/user/:id',
-  'file.download': '/product/:product/download/:file'
+  'file.download': '/product/:product/download/:file',
+  'repo.commit.ref': '/repo/commit/:ref'
 });
 
-urls.user.toString()
+urls.user.toString();
 '/user/:id'
 
-urls.file.download.toString()
+urls.file.download.toString();
 '/product/:product/download/:file'
 
-urls.file.download.build({product: 123, file: 'specs.pdf'})
-'/product/123/download/specs.pdf'
+urls.repo.commit.ref.toString();
+'/repo/commit/:ref'
+```
+
+Build URLs
+----------
+
+```javascript
+urls.user.build({id: 123});
+'/user/123'
+
+urls.user.build()
+// Error: URL build failed. No param id (/user/:id)
+
+urls.file.download.build({product: 'acme', file: 'logo.jpg'});
+'/product/acme/download/logo.jpg'
+
+urls.repo.commit.ref.build({ref: 'HEAD^'});
+'/repo/commit/HEAD^'
+
+urls.repo.commit.ref.build({ref: 'HEAD^'}, true);
+'/repo/commit/HEAD%5E'
 ```
 
 Express
@@ -43,6 +64,7 @@ var urls = urltree({
 });
 
 var app = express();
+
 app.get(urls.user, function(req, res) {
   res.send(urls.user.build({id: 123}));
 });
@@ -56,22 +78,17 @@ var express = require('express');
 var hbs = require('hbs');
 var urltree = require('urltree');
 
-// Setup express.
 var app = express();
 
-// Create URLs. Usually best to place this in another module.
 var urls = urltree({
   'user': '/user/:id'
 });
 
-// Setup handlebars. If you're not using `hbs`, the important part is just
-// registering the helper like below.
 var engine = hbs.create();
 engine.registerHelper('route', urls.handlebarsHelper);
 app.engine('hbs', engine.__express);
 app.set('views', '/path/to/views/');
 
-// Send URLs to `res.locals` so they're accesible in templates.
 app.use(function(req, res, next) {
   res.locals.urls = urls;
   next();
