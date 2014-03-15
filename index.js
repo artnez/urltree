@@ -3,6 +3,14 @@ var inherits = require('util').inherits;
 
 var RE_MATCH_PARAM = new RegExp(':[a-z0-9_]+', 'gi');
 
+function getRouteParam(route, params, name) {
+  name = name.slice(1); // drop leading ":"
+  if (params[name] === undefined) {
+    throw new Error(format('URL build failed. No param %s (%s)', name, route));
+  }
+  return params[name];
+}
+
 function Node(name, parent) {
   this.$name = name = name || '';
   this.$parent = parent;
@@ -39,16 +47,10 @@ Node.prototype.$set = function(node) {
   return node;
 };
 
-Node.prototype.build = function(params) {
-  params = params || {};
-  var route = this.$route;
-  return route.replace(RE_MATCH_PARAM, function(name) {
-    name = name.slice(1);
-    if (params[name] === undefined) {
-      throw new Error(format('URL build failed. No param %s (%s)', name, route));
-    }
-    return params[name];
-  });
+Node.prototype.build = function(params, encode) {
+  var sub = getRouteParam.bind(null, this.$route, params || {});
+  var url = this.$route.replace(RE_MATCH_PARAM, sub);
+  return encode ? encodeURI(url) : url;
 };
 
 module.exports = function(mapping) {

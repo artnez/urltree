@@ -124,3 +124,15 @@ describe('node conflicts', function() {
     assert.throws(create, /Node name home already in use/);
   });
 });
+
+describe('url builder', function() {
+  var urls = urltree({
+    'file': '/image file/:id%:version/download [latest]',
+  });
+  it('encodes the url when asked', function() {
+    assert.equal(
+      urls.file.build({id: 'test^', version: 100}, true),
+      '/image%20file/test%5E%25100/download%20%5Blatest%5D'
+    );
+  });
+});
