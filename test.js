@@ -136,3 +136,24 @@ describe('url builder', function() {
     );
   });
 });
+
+describe('handlebars helper', function() {
+  var urls = urltree({
+    'home': '/',
+    'user': '/user/:id',
+    'file.download': '/image file/:id%:version/download [latest]',
+  });
+  var helper = urls.handlebarsHelper;
+
+  it('builds urls', function() {
+    assert.equal(helper(urls.home), '/');
+    assert.equal(helper(urls.user, {hash: {id: 123}}), '/user/123');
+  });
+
+  it('escapes url', function() {
+    assert.equal(
+      helper(urls.file.download, {hash: {id: 'test^', version: 100}}),
+      '/image%20file/test%5E%25100/download%20%5Blatest%5D'
+    );
+  });
+});

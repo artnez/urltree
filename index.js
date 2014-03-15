@@ -53,6 +53,10 @@ Node.prototype.build = function(params, encode) {
   return encode ? encodeURI(url) : url;
 };
 
+Node.prototype.handlebarsHelper = function(url, options) {
+  return url.build((options || {}).hash || {}, true);
+};
+
 module.exports = function(mapping) {
   var root = new Node();
   Object.getOwnPropertyNames(mapping).forEach(function(path) {
