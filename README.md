@@ -10,8 +10,8 @@ Install
 $ npm install urltree
 ```
 
-Defining URLs
--------------
+Define URLs
+-----------
 
 ```javascript
 var urltree = require('urltree');
