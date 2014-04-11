@@ -52,8 +52,8 @@ urls.repo.commit.ref.build({ref: 'HEAD^'}, true);
 '/repo/commit/HEAD%5E'
 ```
 
-Express
--------
+Express 3
+---------
 
 ```javascript
 var express = require('express');
@@ -66,6 +66,17 @@ var urls = urltree({
 var app = express();
 
 app.get(urls.user, function(req, res) {
+  res.send(urls.user.build({id: 123}));
+});
+```
+
+Express 4
+---------
+
+```javascript
+// ...
+
+app.route(urls.user).get(function(req, res) {
   res.send(urls.user.build({id: 123}));
 });
 ```
