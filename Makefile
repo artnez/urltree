@@ -1,4 +1,4 @@
-MOCHA=./node_modules/.bin/mocha test.js
+MOCHA=./node_modules/.bin/mocha
 
 test:
 	@${MOCHA} test.js
