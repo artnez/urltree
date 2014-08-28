@@ -36,7 +36,7 @@ Node.prototype.$get = function(name) {
 
 Node.prototype.$set = function(node) {
   var name = node.$name;
-  if (this[name] !== undefined) {
+  if (this[name] !== undefined && this[name] instanceof Node) {
     throw new Error('Node name ' + name + ' already in use');
   }
 

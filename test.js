@@ -109,10 +109,8 @@ describe('node params', function() {
 });
 
 describe('node conflicts', function() {
-  it('does not allow overwriting methods', function() {
-    var create = function() { urltree({'length': '/'}); };
-    assert.throws(create, Error);
-    assert.throws(create, /Node name length already in use/);
+  it('does allow overwriting methods', function() {
+    urltree({'length': '/'});
   });
   it('does not allow overwriting nodes', function() {
     var root = urltree({'home': '/', 'user': '/user/:id'});
