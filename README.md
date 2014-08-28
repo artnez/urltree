@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/artnez/urltree.svg?branch=master)](http://travis-ci.org/artnez/urltree)
+
 urltree
 =======
 
