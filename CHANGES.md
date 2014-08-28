@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.3.0
+-----
+
+- Allow overwriting native methods inherited by Node.
+
 0.2.0
 -----
 
