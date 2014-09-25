@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.4.0
+-----
+
+- Wrap handlebars engine instead of exposing helper.
+
 0.3.0
 -----
 
