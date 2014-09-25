@@ -141,7 +141,10 @@ describe('handlebars helper', function() {
     'user': '/user/:id',
     'file.download': '/image file/:id%:version/download [latest]',
   });
-  var helper = urls.handlebarsHelper;
+
+  var helper = null;
+  var engine = {registerHelper: function(name, fn) { helper = fn; }};
+  urls.handlebars(engine);
 
   it('builds urls', function() {
     assert.equal(helper(urls.home), '/');
