@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0
+-----
+
+- `build()` appends unused parameters to query string.
+
 0.4.0
 -----
 
