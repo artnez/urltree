@@ -1,14 +1,36 @@
-var format = require('util').format;
-var inherits = require('util').inherits;
+var util = require('util');
+
+var extend = util._extend;
+var format = util.format;
+var inherits = util.inherits;
+var parser = require('url');
 
 var RE_MATCH_PARAM = new RegExp(':[a-z0-9_]+', 'gi');
 
 function getRouteParam(route, params, name) {
   name = name.slice(1); // drop leading ":"
-  if (params[name] === undefined) {
+  var value = params[name];
+  if (value === undefined) {
     throw new Error(format('URL build failed. No param %s (%s)', name, route));
   }
-  return params[name];
+  delete params[name];
+  return value;
+}
+
+function addToQueryString(url, params) {
+  if (!params) return url;
+
+  var keys = Object.keys(params);
+  if (!keys.length) return url;
+
+  var obj = parser.parse(url, true);
+  extend(obj.query, params);
+
+  // Force use of .query property when formatting. See:
+  // http://nodejs.org/api/url.html#url_url_format_urlobj
+  delete obj.search;
+
+  return parser.format(obj);
 }
 
 function Node(name, parent) {
@@ -50,6 +72,7 @@ Node.prototype.$set = function(node) {
 Node.prototype.build = function(params, encode) {
   var sub = getRouteParam.bind(null, this.$route, params || {});
   var url = this.$route.replace(RE_MATCH_PARAM, sub);
+  url = addToQueryString(url, params);
   return encode ? encodeURI(url) : url;
 };
 

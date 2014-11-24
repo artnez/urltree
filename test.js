@@ -140,6 +140,7 @@ describe('handlebars helper', function() {
     'home': '/',
     'user': '/user/:id',
     'file.download': '/image file/:id%:version/download [latest]',
+    'redirect': '/r/:target?campaign=default',
   });
 
   var helper = null;
@@ -156,5 +157,23 @@ describe('handlebars helper', function() {
       helper(urls.file.download, {hash: {id: 'test^', version: 100}}),
       '/image%20file/test%5E%25100/download%20%5Blatest%5D'
     );
+  });
+
+  it('appends unhandled params to query string', function() {
+    var params = {id: 123, section: 'friends'};
+    var url = helper(urls.user, {hash: params});
+    assert.equal(url, '/user/123?section=friends');
+  });
+
+  it('handles existing query strings in url', function() {
+    var params = {target: 'foo', foo: 'bar'};
+    var url = helper(urls.redirect, {hash: params});
+    assert.equal(url, '/r/foo?campaign=default&foo=bar');
+  });
+
+  it('can overwrite query strings in url', function() {
+    var params = {target: 'foo', campaign: 'bar'};
+    var url = helper(urls.redirect, {hash: params});
+    assert.equal(url, '/r/foo?campaign=bar');
   });
 });
