@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.1
+-----
+
+- Node compatibility fix.
+
 0.5.0
 -----
 
