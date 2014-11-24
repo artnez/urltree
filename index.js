@@ -57,7 +57,7 @@ Node.prototype.handlebars = function(engine) {
   engine.registerHelper('route', function(url, options) {
     return url.build((options || {}).hash || {}, true);
   });
-}
+};
 
 module.exports = function(mapping) {
   var root = new Node();
