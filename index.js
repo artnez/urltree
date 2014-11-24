@@ -24,6 +24,7 @@ function addToQueryString(url, params) {
   if (!keys.length) return url;
 
   var obj = parser.parse(url, true);
+  obj.query = obj.query || {};
   extend(obj.query, params);
 
   // Force use of .query property when formatting. See:
